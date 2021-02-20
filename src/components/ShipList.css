@@ -1,0 +1,41 @@
+.ship-list {
+  width: 400px;
+  height: 200px;
+  background-color: blue;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 20px;
+}
+.ship  {
+  margin: 4px;
+  display: flex;
+}
+.ship div {
+  display: flex;
+  width: 40px;
+  height: 40px;
+}
+
+.destroyer {
+  width: 40px;
+  height: 40px;
+  background-color: rgb(0, 238, 255);
+
+}
+.submarine {
+  width: 80px;
+  height: 40px;
+  background-color: rgb(77, 247, 134);
+  
+}
+.battleship {
+  width: 120px;
+  height: 40px;
+  background-color: rgb(243, 0, 190);
+
+}
+.carrier {
+  width: 160px;
+  height: 40px;
+  background-color: rgb(223, 171, 0);
+}
