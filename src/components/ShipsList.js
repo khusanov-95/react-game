@@ -3,6 +3,9 @@ import './ShipList.css';
 
 const ShipsList = ({row,cells}) => {
 
+
+
+
   return (
     <div className="ship-list">
       <div>
@@ -24,6 +27,8 @@ const ShipsList = ({row,cells}) => {
     </div>
   );
 };
+
+
 
 function destroyer(pos) {
   return(
@@ -61,7 +66,28 @@ function carrier() {
 }
 
 
+/* 
 
+  // draw the computer ships in random location 
+function generateShip(ship) {
+  let direction;
+  let randomDirection = Math.floor(Math.random() * ship.directions.length);
+  let current = ship.directions[randomDirection];
+  if(randomDirection === 0) direction = 1;
+  if(randomDirection === 1) direction = 10;
+  let randomStart = Math.floor(Math.random() * cells.length - (ship.directions[0].length * direction));// для того что бы гененировать корабль вниз
+
+  const Taken = current.some(index => cells[randomStart + index].classList.contains('taken'))// classlist might not work
+  const AtRight = current.some(index => (randomStart + index) % row === row - 1); // not to got out of right edge
+  const AtLeft = current.some(index => (randomStart + index) % row === 0)
+
+  if(!Taken && !AtRight && !AtLeft) current.forEach(index => cells[randomStart + index].classList.add('taken', ship.name))
+
+  else generateShip(ship);
+}
+
+
+generateShip(ArrayOfShips[0]); */
 
 
 
