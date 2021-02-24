@@ -11,7 +11,7 @@ const ComputerBattleGround = () => {
   //create cells 
 function createCells() {
   for(let i = 0; i < 100; i++) {
-    cells.push(<div className='computer-cell' key={i} id={`computerCell-${i}`} ref={(element) => Refs.current.push(element)}></div>);
+    ComputerCells.push(<div className='computer-cell' key={i} id={`computerCell-${i}`} ref={(element) => Refs.current.push(element)}></div>);
   }
 }
 createCells();
@@ -32,17 +32,30 @@ useEffect(() => {
     let Taken = current.some(i => DomCells[randomStart + i].classList.contains('taken'));
     let AtRightEdge = current.some(i => (randomStart + i) % row === row - 1);
     let AtLeftEdge = current.some(i => (randomStart + i) % row === 0);
-    // let ShipOnTop = DomCells[randomStart - 10]
-    // let ShipOnBottom = DomCells[randomStart + 10]
-    // let ShipOnRight = DomCells[randomStart + 1]
-    // let ShipOnLeft = DomCells[randomStart- 1]
 
-    // console.log(ShipOnBottom, randomStart)
+     // продолжить тут 
    
 
-    if(!Taken && !AtRightEdge && !AtLeftEdge) current.forEach(i => DomCells[randomStart + i].classList.add('taken',ship.name));
+    if(!Taken && !AtRightEdge && !AtLeftEdge) {
+      current.forEach((i) => {
+        DomCells[randomStart + i].classList.add('taken',ship.name, 'ship-cell');
+        // DomCells[(randomStart + i) - 10].classList.add('taken')
+        // DomCells[(randomStart + i) + 10].classList.add('taken')
+        // DomCells[(randomStart + i)+ 1].classList.add('taken')
+        // DomCells[(randomStart + i) - 1].classList.add('taken')
+        // DomCells[(randomStart + i) - 9].classList.add('taken')
+        // DomCells[(randomStart + i) - 11].classList.add('taken')
+        // DomCells[(randomStart + i) + 9].classList.add('taken')
+        // DomCells[(randomStart + i) + 11].classList.add('taken')
+        }
+      );
+    } else {
+      generateShip(ship)
+    }
+
     
-    else generateShip(ship)
+    
+    
 
 
   }
@@ -65,7 +78,7 @@ useEffect(() => {
   
   return (
     <div className="computer-cells-container">
-      {cells}
+      {ComputerCells}
     </div>
   )
 
@@ -75,7 +88,7 @@ useEffect(() => {
 
 let row = 10;
 
-let cells = [];
+let ComputerCells = [];
 
 
 

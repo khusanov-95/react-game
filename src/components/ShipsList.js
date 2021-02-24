@@ -1,93 +1,112 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './ShipList.css';
 
-const ShipsList = ({row,cells}) => {
+const ShipsList = (props) => {
+
+const [isRotated, setRotation] = useState(false)
 
 
+function rotateShip(e) {
+  setRotation(!isRotated);
+  if(isRotated) {
+    e.target.parentNode.style.display = 'inline-block';
+    props.getIsHorizontal(isRotated)
+  } else {
+    e.target.parentNode.style.display = 'flex'
+    props.getIsHorizontal(isRotated)
+  }  
+  
+}
+
+function dragStart(e) {
+  props.getDragedShip(e.target)
+  // setTimeout(() => {    подумать
+  //   e.target.style.display = "none";
+  // },0); // in order to hide ship when its dragged
+}
+
+function destroyer(pos) {
+  return(
+    <div 
+    className="destroyer ship" 
+    draggable={true}
+    onMouseDown={(e) => props.selectedCellId(e.target.id)}
+    onDragStart={dragStart}
+    >
+      <div id={`destroyer-${pos}-0`} ></div>
+    </div>
+  );
+}
+
+function submarine(pos) {
+  return(
+    <div className={`submarine ship`} 
+    draggable={true} 
+    onDoubleClick={rotateShip}
+    onMouseDown={(e) => props.selectedCellId(e.target.id)}
+    onDragStart={dragStart} // or children
+    >
+      <div id={`submarine-${pos}-0` }></div>
+      <div id={`submarine-${pos}-1` }></div>
+    </div>
+  );
+}
+function battleship(pos) {
+  return(
+    <div className="battleship ship" 
+    draggable={true} 
+    onDoubleClick={rotateShip}
+    onMouseDown={(e) => props.selectedCellId(e.target.id)}
+    onDragStart={dragStart}
+     >
+      <div id={`battleship-${pos}-0`}></div>
+      <div id={`battleship-${pos}-1`}></div>
+      <div id={`battleship-${pos}-2`}></div>
+    </div>
+  );
+}
+function carrier(pos) {
+  return(
+    <div className="carrier ship" 
+    draggable={true} 
+    onDoubleClick={rotateShip}
+    onMouseDown={(e) => props.selectedCellId(e.target.id)}
+    onDragStart={dragStart} 
+    >
+      <div id={`carrier-${pos}-0}`}></div>
+      <div id={`carrier-${pos}-1`}></div>
+      <div id={`carrier-${pos}-2`}></div>
+      <div id={`carrier-${pos}-3`}></div>
+    </div>
+  );
+}
 
 
   return (
     <div className="ship-list">
       <div>
-        {destroyer('first')}
-        {destroyer('second')}
-        {destroyer('third')}
-        {destroyer('fourth')}
+        {destroyer('a')}
+        {destroyer('b')}
+        {destroyer('c')}
+        {destroyer('d')}
       </div>
       <div>
-        {submarine('first')}
-        {submarine('second')}
-        {submarine('third')}
+        {submarine('a')}
+        {submarine('b')}
+        {submarine('c')}
       </div>
       <div> 
-        {battleship('first')}
-        {battleship('second')}
-        {carrier(carrier)}
+        {battleship('a')}
+        {battleship('b')}
+      </div>
+      <div> 
+        {carrier('a')}
       </div>
     </div>
   );
 };
 
 
-
-function destroyer(pos) {
-  return(
-    <div className="destroyer ship" draggable={true}>
-      <div id={`destroyer-0-${pos}`}></div>
-    </div>
-  );
-}
-function submarine(pos) {
-  return(
-    <div className="submarine ship" draggable={true}>
-      <div id={`submarine-0-${pos}`}></div>
-      <div id={`submarine-1-${pos}`}></div>
-    </div>
-  );
-}
-function battleship(pos) {
-  return(
-    <div className="battleship ship" draggable={true}>
-      <div id={`battleship-0-${pos}`}></div>
-      <div id={`battleship-1-${pos}`}></div>
-      <div id={`battleship-2-${pos}`}></div>
-    </div>
-  );
-}
-function carrier() {
-  return(
-    <div className="carrier ship" draggable={true}>
-      <div id="carrier-0"></div>
-      <div id="carrier-1"></div>
-      <div id="carrier-2"></div>
-      <div id="carrier-3"></div>
-    </div>
-  );
-}
-
-
-/* 
-
-  // draw the computer ships in random location 
-function generateShip(ship) {
-  let direction;
-  let randomDirection = Math.floor(Math.random() * ship.directions.length);
-  let current = ship.directions[randomDirection];
-  if(randomDirection === 0) direction = 1;
-  if(randomDirection === 1) direction = 10;
-  let randomStart = Math.floor(Math.random() * cells.length - (ship.directions[0].length * direction));// для того что бы гененировать корабль вниз
-
-  const Taken = current.some(index => cells[randomStart + index].classList.contains('taken'))// classlist might not work
-  const AtRight = current.some(index => (randomStart + index) % row === row - 1); // not to got out of right edge
-  const AtLeft = current.some(index => (randomStart + index) % row === 0)
-
-  if(!Taken && !AtRight && !AtLeft) current.forEach(index => cells[randomStart + index].classList.add('taken', ship.name))
-
-  else generateShip(ship);
-}
-
-
-generateShip(ArrayOfShips[0]); */
 
 
 

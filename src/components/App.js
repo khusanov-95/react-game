@@ -13,9 +13,8 @@ import './App.css'
 const App = () => {
   return (
     <div className="container">
-      <UserBattleground />
       <ComputerBattleGround />
-      <ShipsList />
+      <UserBattleground />
     </div>
   );
 }
