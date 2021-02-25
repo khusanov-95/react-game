@@ -13,7 +13,7 @@ function createCells() {
   }
 }
 createCells();
-  //generate ship //logic used https://www.youtube.com/watch?v=U64vIhh0TyM&t=2047s
+  
 useEffect(() => {
   function generateShip(ship) {
     let position;

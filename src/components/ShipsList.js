@@ -22,7 +22,6 @@ function dragStart(e) {
   // setTimeout(() => {    подумать
   //   e.target.style.display = "none";
   // },0); // in order to hide ship when its dragged
-  console.log(e.target)
 }
 
 function destroyer(pos) {

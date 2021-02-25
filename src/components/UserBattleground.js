@@ -7,7 +7,7 @@ const UserBattleground = () => {
 
   const [shipCellId, setShipCellId] = useState('');
   const [dragedShip, setDragedShip] = useState(null);
-  const [isVertical, setIsHorizontal] = useState(false);
+  const [isVertical, setIsVertical] = useState(false);
 
 
   const Refs = useRef([]);  // multiple refs logic = https://dev.to/mattc/adding-react-refs-to-an-array-of-items-3lik
@@ -67,42 +67,37 @@ function dragDropHandler(e){
   let shipClass = shipCellLastId.slice(0, -4);
   let userCellIndex = +e.target.id.substr(9)
   let ShipLastIndex= +shipCellLastId.substr(-1);
-  let ShipLastIdOnBoard = ShipLastIndex + userCellIndex
-  let selectedShipId = +shipCellId.substr(-1)
-
+  let ShipLastIdOnBoard = ShipLastIndex + userCellIndex;
+  let selectedShipId = +shipCellId.substr(-1);
+    // shipLastIdOnBoardVertical
+  let ShipLastIdOnBoardVertical =  (ShipLastIdOnBoard - (dragedShipCells.length - 1)) + (10 * ShipLastIndex);
 
   ShipLastIdOnBoard = ShipLastIdOnBoard - selectedShipId; 
+  ShipLastIdOnBoardVertical = ShipLastIdOnBoardVertical - selectedShipId * 10;
 
 
-  let shipFirstIdOnBoardVertical = ShipLastIdOnBoard - (dragedShipCells.length - 1);
-  let shipLastIdOnBoardVertical =  shipFirstIdOnBoardVertical + (10 * ShipLastIndex);
-
-
-
-
-  console.log(shipLastIdOnBoardVertical,shipLastIdOnBoardVertical - (selectedShipId * 10))
-  const notAllowedHorizontal = [0,10,20,30,40,50,60,70,80,90,1,11,21,31,41,51,61,71,81,91,2,12,22,32,42,52,62,72,82,92]
-  // const notAllowedVertical = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
   
-  let ShipNotAllowedHorizontal = notAllowedHorizontal.splice(0, 10 * ShipLastIndex)
-  // let ShipNotAllowedVertical = notAllowedVertical.splice(0, 10 * ShipLastIndex)
+  let ShipNotAllowedHorizontal = [0,10,20,30,40,50,60,70,80,90,1,11,21,31,41,51,61,71,81,91,2,12,22,32,42,52,62,72,82,92].splice(0, 10 * ShipLastIndex) // preventse ship to go to next row cells horizontally
+  
 
   if(!isVertical && !ShipNotAllowedHorizontal.includes(ShipLastIdOnBoard)) {
     for(let i = 0; i < dragedShip.childNodes.length; i++) {
        if(ShipLastIdOnBoard < 100) DomCells[userCellIndex - selectedShipId + i].classList.add('taken',shipClass);
        else return 
-  } }
-  else if (isVertical) {
+    }
+  }else if (isVertical) {
     for(let i = 0; i < dragedShip.childNodes.length; i++) {
-      if(shipLastIdOnBoardVertical < 100 && shipLastIdOnBoardVertical > 0) DomCells[userCellIndex - selectedShipId + row * i].classList.add('taken',shipClass)
+      if(ShipLastIdOnBoardVertical < 100 && ShipLastIdOnBoardVertical > row * (dragedShipCells.length - 1)) DomCells[(userCellIndex - row * selectedShipId)+ row * i].classList.add('taken',shipClass)
       else return 
     }
   } else {
   return 
   }
+ 
   // remove ship from ship list
   dragedShip.style.display = 'none';
-  setIsHorizontal(false)
+
+  setIsVertical(false)
 }
 
 
@@ -116,7 +111,7 @@ function dragEndHandler(e) {
      <ShipList 
      selectedCellId = {shipCellId => setShipCellId(shipCellId)} 
      getDragedShip = {dragedShip => setDragedShip(dragedShip)}
-     getIsVertical = {isVertical => setIsHorizontal(isVertical)}
+     getIsVertical = {isVertical => setIsVertical(isVertical)}
     //  getDragedShipLength = {dragedShipLength => setDragedShipLength(dragedShipLength)}
      />
     </div>
