@@ -5,9 +5,7 @@ import './ComputerBattleground.css';
 // import './ShipList.css';
 
 const ComputerBattleGround = () => {
-
   const Refs = useRef([]);  // multiple refs logic = https://dev.to/mattc/adding-react-refs-to-an-array-of-items-3lik
-
   //create cells 
 function createCells() {
   for(let i = 0; i < 100; i++) {
@@ -15,9 +13,6 @@ function createCells() {
   }
 }
 createCells();
-
-
-
   //generate ship //logic used https://www.youtube.com/watch?v=U64vIhh0TyM&t=2047s
 useEffect(() => {
   function generateShip(ship) {
@@ -46,18 +41,12 @@ useEffect(() => {
         // DomCells[(randomStart + i) - 9].classList.add('taken')
         // DomCells[(randomStart + i) - 11].classList.add('taken')
         // DomCells[(randomStart + i) + 9].classList.add('taken')
-        // DomCells[(randomStart + i) + 11].classList.add('taken')
+        // DomCells[(randomStart + i) + 11].classList.add('taken') // подумать
         }
       );
     } else {
       generateShip(ship)
-    }
-
-    
-    
-    
-
-
+    }     
   }
   
   generateShip(ArrayOfShips[0]);
@@ -73,25 +62,14 @@ useEffect(() => {
 
 },// add
 )
-
-  
-  
   return (
     <div className="computer-cells-container">
       {ComputerCells}
     </div>
   )
-
-  
 }
-
-
 let row = 10;
-
 let ComputerCells = [];
-
-
-
 
 export default ComputerBattleGround; 
 

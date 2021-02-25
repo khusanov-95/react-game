@@ -5,15 +5,14 @@ const ShipsList = (props) => {
 
 const [isRotated, setRotation] = useState(false)
 
-
 function rotateShip(e) {
   setRotation(!isRotated);
   if(isRotated) {
     e.target.parentNode.style.display = 'inline-block';
-    props.getIsHorizontal(isRotated)
+    props.getIsVertical(isRotated)
   } else {
     e.target.parentNode.style.display = 'flex'
-    props.getIsHorizontal(isRotated)
+    props.getIsVertical(isRotated)
   }  
   
 }
@@ -23,6 +22,7 @@ function dragStart(e) {
   // setTimeout(() => {    подумать
   //   e.target.style.display = "none";
   // },0); // in order to hide ship when its dragged
+  console.log(e.target)
 }
 
 function destroyer(pos) {
@@ -73,14 +73,13 @@ function carrier(pos) {
     onMouseDown={(e) => props.selectedCellId(e.target.id)}
     onDragStart={dragStart} 
     >
-      <div id={`carrier-${pos}-0}`}></div>
+      <div id={`carrier-${pos}-0`}></div>
       <div id={`carrier-${pos}-1`}></div>
       <div id={`carrier-${pos}-2`}></div>
       <div id={`carrier-${pos}-3`}></div>
     </div>
   );
 }
-
 
   return (
     <div className="ship-list">
@@ -105,10 +104,5 @@ function carrier(pos) {
     </div>
   );
 };
-
-
-
-
-
 
 export default ShipsList; 
