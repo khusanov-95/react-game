@@ -1,49 +1,14 @@
-import React ,{useState, useRef}from 'react';
+import React ,{useState}from 'react';
 import ShipList from './ShipsList';
 
 import './UserBattleground.css';
 import './ShipList.css';
 const UserBattleground = () => {
-
+  let row = 10;
   const [shipCellId, setShipCellId] = useState('');
   const [dragedShip, setDragedShip] = useState(null);
   const [isVertical, setIsVertical] = useState(false);
-
-
-  const Refs = useRef([]);  // multiple refs logic = https://dev.to/mattc/adding-react-refs-to-an-array-of-items-3lik
-
-  let row = 10;
-  let userCells = [];
-
-
-
-//create cells 
-function createCells() {
-  for(let i = 0; i < 100; i++) {
-    userCells.push(<div 
-      className="user-cell" 
-      key={i} 
-      id={`userCell-${i}`}
-      // onDragStart={(e) => dragStartHandler(e)}
-      onDragOver={(e) => dragOverHandler(e)}
-      onDragEnter={(e) => dragEnterHandler(e)}
-      onDragLeave={(e) => dragLeaveHandler(e)}
-      onDrop={(e) => dragDropHandler(e)}
-      onDragEnd={(e) => dragEndHandler(e)}
-      ref={(element) => Refs.current.push(element)}
-      ></div>)
-  }
-}
-
-createCells()
-
-let DomCells = Refs.current
-
-// function dragStartHandler(e) {
-//   // console.log(e.target);
-//   // console.log(this);
-//   // console.log(e)
-// }
+  const [userCells, setUserCells] = useState(Array.from( new Array(100), function() { return {ClassName: 'user-cell', content: '',}} ));
 
 function dragOverHandler(e) {
   e.preventDefault()
@@ -75,28 +40,41 @@ function dragDropHandler(e){
   ShipLastIdOnBoard = ShipLastIdOnBoard - selectedShipId; 
   ShipLastIdOnBoardVertical = ShipLastIdOnBoardVertical - selectedShipId * 10;
 
-
-  
   let ShipNotAllowedHorizontal = [0,10,20,30,40,50,60,70,80,90,1,11,21,31,41,51,61,71,81,91,2,12,22,32,42,52,62,72,82,92].splice(0, 10 * ShipLastIndex) // preventse ship to go to next row cells horizontally
   
-
   if(!isVertical && !ShipNotAllowedHorizontal.includes(ShipLastIdOnBoard)) {
     for(let i = 0; i < dragedShip.childNodes.length; i++) {
-       if(ShipLastIdOnBoard < 100) DomCells[userCellIndex - selectedShipId + i].classList.add('taken',shipClass);
+     
+       if(ShipLastIdOnBoard < 100 && !userCells[userCellIndex - selectedShipId + i].ClassName.includes('taken')) {
+        setUserCells(
+          userCells.map((cell) => {
+            if(cell === userCells[userCellIndex - selectedShipId + i]) cell.ClassName = `user-cell taken ${shipClass}`
+            return cell
+          })
+        )
+       } 
        else return 
     }
-  }else if (isVertical) {
+  } else if (isVertical) {
     for(let i = 0; i < dragedShip.childNodes.length; i++) {
-      if(ShipLastIdOnBoardVertical < 100 && ShipLastIdOnBoardVertical > row * (dragedShipCells.length - 1)) DomCells[(userCellIndex - row * selectedShipId)+ row * i].classList.add('taken',shipClass)
+      if(ShipLastIdOnBoardVertical < 100 && ShipLastIdOnBoardVertical > row * (dragedShipCells.length - 1) && !userCells[(userCellIndex - row * selectedShipId)+ row * i].ClassName.includes('taken')) {
+        console.log(userCells[(userCellIndex - row * selectedShipId)+ row * i].ClassName.includes('taken'))
+        setUserCells(
+          userCells.map((cell) => {
+            if(cell === userCells[(userCellIndex - row * selectedShipId)+ row * i]) {
+              cell.ClassName = `user-cell taken ${shipClass}`
+            } 
+            return cell
+          })
+        )
+      }
       else return 
     }
   } else {
   return 
   }
- 
   // remove ship from ship list
   dragedShip.style.display = 'none';
-
   setIsVertical(false)
 }
 
@@ -107,7 +85,21 @@ function dragEndHandler(e) {
 
   return (
     <div className="user-cells-container">
-      {userCells}
+      {userCells.map((user,i) => 
+      <div 
+        className={user.ClassName} 
+        key={i} 
+        id={`userCell-${i}`}
+        // onDragStart={(e) => dragStartHandler(e)}
+        onDragOver={(e) => dragOverHandler(e)}
+        onDragEnter={(e) => dragEnterHandler(e)}
+        onDragLeave={(e) => dragLeaveHandler(e)}
+        onDrop={(e) => dragDropHandler(e)}
+        onDragEnd={(e) => dragEndHandler(e)}
+        // ref={(element) => Refs.current.push(element)}
+        >{user.content}
+      
+      </div>)}
      <ShipList 
      selectedCellId = {shipCellId => setShipCellId(shipCellId)} 
      getDragedShip = {dragedShip => setDragedShip(dragedShip)}
