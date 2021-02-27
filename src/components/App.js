@@ -1,15 +1,16 @@
-import React,{useState} from 'react';
+import React, {useState,useRef} from 'react';
 import ComputerBattleGround from './ComputerBattleground';
 import UserBattleground from './UserBattleground';
 
 
 import './css/App.css'
 
-let gameOver = true;
-let currentPlayer = 'user';
+let gameOver = false;
+// let turn = 'user';
+
 
 function playGame() {
-  // if(gameOver) return
+  if(gameOver) return
   // if(currentPlayer === 'user');
   console.log('123')
 }
@@ -17,7 +18,8 @@ function playGame() {
 
 
 const App = () => {
-
+  let [turn, setTurn] = useState('user')
+console.log(turn)
 //   const [countDestroyer, setCountDestroyer] = useState(0)
 //   const [countSubmarine, setCountSubmarine] = useState(0)
 //   const [countBattleship, setCountBattleship] = useState(0)
@@ -29,15 +31,19 @@ const App = () => {
   return (
     <div className="container">
       <ComputerBattleGround 
-      turn={currentPlayer === 'user' ? 'userTurn' : 'computerTurn'}
+      turn={turn} setTurn={setTurn}
+      gameOver={gameOver}
 
       // countDestroyer={countDestroyer} setCountDestroyer={setCountDestroyer}
       // countSubmarine={countSubmarine} setCountSubmarine={setCountSubmarine}
       // countBattleship={countBattleship} setCountBattleship={setCountBattleship}
       // countCarrier={countCarrier} setCountCarrier={setCountCarrier}
+      /> 
+      <UserBattleground 
+      turn={turn} setTurn={setTurn}
+      gameOver={gameOver}
       />
-      <UserBattleground />
-      <div>{currentPlayer === 'user' ? 'Your turn' : 'Computers turn'}</div>
+      <div></div>
       <button onClick={() => playGame()}>Start Game</button>
     </div>
   );

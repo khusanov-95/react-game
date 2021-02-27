@@ -31,8 +31,16 @@
   height: 38px;
   border: 1px solid #fff;
 }
-
-.damaged {
-  background-color: yellowgreen;
+.computer-cell.damaged {
+  background-color: black;
+}
+.computer-cell.missed {
+  background-color: white;
+}
+.user-cell.damaged {
+  background-color: black;
+}
+.user-cell.missed {
+  background-color: white;
 }
 

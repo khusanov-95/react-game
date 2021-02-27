@@ -3,7 +3,7 @@ import ShipList from './ShipsList';
 
 import './css/App.css';
 import './css/ShipList.css';
-const UserBattleground = () => {
+const UserBattleground = (props) => {
   let row = 10;
   const [shipCellId, setShipCellId] = useState('');
   const [dragedShip, setDragedShip] = useState(null);
@@ -82,6 +82,61 @@ function dragDropHandler(e){
 function dragEndHandler(e) {
   console.log('drag end')
 }
+
+
+let computerCountDestroyer = 0;
+let computerCountSubmarine = 0;
+let computerCountBattleship = 0;
+let computerCountCarrier = 0;
+
+
+function revealUserCell() {
+  console.log('pc turn')
+  props.setTurn('user');
+  let random = Math.floor(userCells.length * Math.random());
+ 
+    if(!userCells[random].ClassName.includes('damaged') && !userCells[random].ClassName.includes('missed')) {
+      // setUserCells(
+      //   userCells.map((cell, i) => {
+      //     if(cell === userCells[random]) cell.ClassName = `${cell.ClassName} damaged`
+      //     return cell
+      //   })
+      // )
+      if(!userCells[random].ClassName.includes('destroyer')) computerCountDestroyer ++
+      if(!userCells[random].ClassName.includes('submarine')) computerCountSubmarine ++
+      if(!userCells[random].ClassName.includes('battleship')) computerCountBattleship ++
+      if(!userCells[random].ClassName.includes('carrier')) computerCountCarrier ++
+
+      if(userCells[random].ClassName.includes('taken')) {
+      setUserCells(
+        userCells.map((cell) => {
+          if(cell === userCells[random]) cell.ClassName = `${cell.ClassName} damaged`
+          return cell
+        })
+      )
+      } else {
+        setUserCells(
+          userCells.map((cell) => {
+            if(cell === userCells[random]) cell.ClassName = `${cell.ClassName} missed`
+            return cell
+          })
+        )
+      }
+      // if(cell.ClassName.includes('taken')) {
+      //  cell.ClassName = `${cell.ClassName} damaged`;
+      //  e.target.className = `${cell.ClassName} damaged`
+      // } else {
+      //   e.target.className = `${cell.ClassName} missed`
+      //   cell.ClassName = `${cell.ClassName} missed`;
+      // }
+    } 
+      else  revealUserCell()
+      
+      // return
+
+}
+
+if(props.turn === 'computer' && !props.gameOver) setTimeout (revealUserCell, 1600) 
 
   return (
     <div>
