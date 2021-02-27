@@ -1,13 +1,14 @@
-import React from 'react';
+import React ,{useState}from 'react';
 import ArrayOfShips from './ArrayOfShips';
 
-import './ComputerBattleground.css';
+import './css/App.css';
 // import './ShipList.css';
 let row = 10;
 
-const ComputerBattleGround = () => {
-  let computerCells = Array.from( new Array(100), function() { return {ClassName: 'computer-cell', content: ''}});
 
+const ComputerBattleGround = (props) => {
+
+  let computerCells = Array.from( new Array(100), function() { return {ClassName: 'computer-cell', content: ''}});
   function generateShip(ship) {
     let position;
     let randomPosition = Math.floor(Math.random() * ship.positions.length);
@@ -47,11 +48,41 @@ const ComputerBattleGround = () => {
   generateShip(ArrayOfShips[2]);
   generateShip(ArrayOfShips[2]);
   generateShip(ArrayOfShips[3]);
+//playing
+
+// const [countDestroyer, setCountDestroyer] = useState(0)
+// const [countSubmarine, setCountSubmarine] = useState(0)
+// const [countBattleship, setCountBattleship] = useState(0)
+// const [countCarrier, setCountCarrier] = useState(0)
+
+let countDestroyer = 0;
+let countSubmarine = 0;
+let countBattleship = 0;
+let countCarrier = 0;
+
+
+
+    function revealCell(cell) {
+  if(props.turn === 'userTurn') {
+      if(cell.ClassName.includes('destroyer')) countDestroyer ++
+      if(cell.ClassName.includes('submarine')) countSubmarine ++
+      if(cell.ClassName.includes('battleship')) countBattleship ++
+      if(cell.ClassName.includes('carrier')) countCarrier ++
+
+      if(cell.ClassName.includes('taken')) {
+       cell.ClassName = `${cell.ClassName} damaged`;
+       console.log(cell)
+      }
+    }
+    // computerCells.forEach(cell =>  revealCell(cell))
+    // console.log(countDestroyer,countSubmarine,countBattleship,countCarrier)
+  } 
 
   return (
     <div className="computer-cells-container">
        {computerCells.map((computerCell,i) => 
-      <div 
+      <div
+        onClick={() => revealCell(computerCell)}
         className={computerCell.ClassName} 
         key={i} 
         id={`computerCell-${i}`}

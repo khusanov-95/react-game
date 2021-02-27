@@ -1,0 +1,38 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.computer-cells-container {
+  width: 400px;
+  height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+.computer-cell {
+  background-color: green;
+  width: 38px;
+  height: 38px;
+  border: 1px solid #fff;
+}
+.user-cells-container {
+  width: 400px;
+  height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+.user-cell {
+  background-color: red;
+  width: 38px;
+  height: 38px;
+  border: 1px solid #fff;
+}
+
+.damaged {
+  background-color: yellowgreen;
+}
+

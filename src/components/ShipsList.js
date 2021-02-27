@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import './ShipList.css';
+import './css/ShipList.css';
 
 const ShipsList = (props) => {
 
@@ -19,7 +19,7 @@ function rotateShip(e) {
 
 function dragStart(e) {
   props.getDragedShip(e.target)
-  // setTimeout(() => {    подумать
+  // setTimeout(() => {  
   //   e.target.style.display = "none";
   // },0); // in order to hide ship when its dragged
 }

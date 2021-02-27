@@ -1,8 +1,8 @@
 import React ,{useState}from 'react';
 import ShipList from './ShipsList';
 
-import './UserBattleground.css';
-import './ShipList.css';
+import './css/App.css';
+import './css/ShipList.css';
 const UserBattleground = () => {
   let row = 10;
   const [shipCellId, setShipCellId] = useState('');
@@ -84,6 +84,7 @@ function dragEndHandler(e) {
 }
 
   return (
+    <div>
     <div className="user-cells-container">
       {userCells.map((user,i) => 
       <div 
@@ -106,6 +107,8 @@ function dragEndHandler(e) {
      getIsVertical = {isVertical => setIsVertical(isVertical)}
     //  getDragedShipLength = {dragedShipLength => setDragedShipLength(dragedShipLength)}
      />
+    
+    </div>
     </div>
   )
 }
