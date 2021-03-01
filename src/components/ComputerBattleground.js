@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ArrayOfShips from './ArrayOfShips';
 import GenerateShips from './GenerateShips'
 
@@ -25,17 +25,6 @@ const ComputerBattleGround = (props) => {
 
 //playing
 
-// const [countDestroyer, setCountDestroyer] = useState(0)
-// const [countSubmarine, setCountSubmarine] = useState(0)
-// const [countBattleship, setCountBattleship] = useState(0)
-// const [countCarrier, setCountCarrier] = useState(0)
-
-let countDestroyer = 0;
-let countSubmarine = 0;
-let countBattleship = 0;
-let countCarrier = 0;
-
-
 
 
 
@@ -44,11 +33,10 @@ let countCarrier = 0;
     function revealComputerCell(cell,e) {
   if(props.turn === 'user' && !props.gameOver) {
     if(!e.target.className.includes('damaged') && !e.target.className.includes('missed')) {
-      if(cell.ClassName.includes('destroyer')) countDestroyer ++
-      if(cell.ClassName.includes('submarine')) countSubmarine ++
-      if(cell.ClassName.includes('battleship')) countBattleship ++
-      if(cell.ClassName.includes('carrier')) countCarrier ++
-
+      if(cell.ClassName.includes('destroyer')) props.setCountDestroyer(props.countDestroyer +1)
+      if(cell.ClassName.includes('submarine')) props.setCountSubmarine(props.countSubmarine +1)
+      if(cell.ClassName.includes('battleship')) props.setCountBattleship(props.countBattleship +1)
+      if(cell.ClassName.includes('carrier')) props.setCountCarrier(props.countCarrier +1)
       if(cell.ClassName.includes('taken')) {
        cell.ClassName = `${cell.ClassName} damaged`;
        e.target.className = `${cell.ClassName} damaged`
@@ -61,10 +49,13 @@ let countCarrier = 0;
      
     }
 
-  } 
+  }
+  
+
 
   return (
-    <div className="computer-cells-container">
+    <div className="computer-battleground">
+      <div className="computer-cells-container">
        {computerCells.map((computerCell,i) => 
       <div
         onClick={(e) => revealComputerCell(computerCell,e)}
@@ -74,6 +65,7 @@ let countCarrier = 0;
         >{computerCell.content}
       </div>)}
     </div>
+    </div> 
   )
 }
 

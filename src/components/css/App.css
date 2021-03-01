@@ -1,46 +1,183 @@
+body {
+  background-color: #200a0c;
+}
+img {
+  width: 100%;
+  height: auto;
+}
 .container {
+  position: relative;
   max-width: 1000px;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  font-family: "Times New Roman", Times, Baskerville, Georgia, serif;
+  background-color: rgb(224, 224, 224);
+  min-height: 100vh;
 }
-
-.computer-cells-container {
+.starting-page {
+  background-color: rgb(56, 158, 111);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.starting-page__inner {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: rgba(29, 29, 29, 0.979);
+}
+.starting-page__inner h2 {
+  text-transform: uppercase;
+}
+.starting-page__inner > div {
   width: 400px;
-  height: 400px;
+}
+.starting-divage__btn {
+  text-align: center;
+  position: relative;
+  
+}
+.starting-divage__btn:after {
+  content: '';
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  left: 0;
+  bottom: 5%;
+  background-color: rgba(29, 29, 29, 0.979);
+}
+.starting-divage__btn button {
+  border: none;
+  background-color: rgb(56, 158, 111);
+  color: rgba(29, 29, 29, 0.979);
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  transition: all .2s ease;
+}
+.starting-divage__btn button:hover {
+  transform: scale(1.2);
+  color:yellowgreen;
+  font-weight: bold;
+}
+.notebook-line {
+  height: 1px;
+  width: 100%;
+  background-color: rgba(29, 29, 29, 0.979);
+  margin-top: 25px;
+}
+.user-battleground {
+  display: flex;
+  flex-direction: column;
+  
+}
+.computer-battleground {
+  height: 615px;
+}
+.computer-cells-container {
+  width: 350px;
+  height: 350px;
   display: flex;
   flex-wrap: wrap;
-  padding: 20px;
+  margin: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .computer-cell {
-  background-color: green;
-  width: 38px;
-  height: 38px;
-  border: 1px solid #fff;
+  background-color: rgb(255, 255, 255);
+  width: 33px;
+  height: 33px;
+  border: 1px solid rgb(84, 190, 216);
+  cursor: pointer;
 }
 .user-cells-container {
-  width: 400px;
-  height: 400px;
+  width: 350px;
+  height: 350px;
   display: flex;
   flex-wrap: wrap;
-  padding: 20px;
+  margin: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .user-cell {
-  background-color: red;
-  width: 38px;
-  height: 38px;
-  border: 1px solid #fff;
+  background-color: rgb(255, 255, 255);
+  width: 33px;
+  height: 33px;
+  border: 1px solid rgb(84, 190, 216);
+  cursor: pointer;
 }
-.computer-cell.damaged {
-  background-color: black;
-}
-.computer-cell.missed {
-  background-color: white;
-}
-.user-cell.damaged {
-  background-color: black;
-}
-.user-cell.missed {
-  background-color: white;
+.computer-cell.taken {
+  background-color: rgb(255, 255, 255);
+  border-color: rgb(84, 190, 216);;
+} 
+.computer-cell.taken.damaged, .user-cell.damaged  {
+  position: relative;
 }
 
+.computer-cell.missed, .user-cell.missed {
+  position: relative;
+}
+.computer-cell.missed::after, .user-cell.missed::after, .computer-cell.taken.damaged::after, .user-cell.damaged::after{
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgb(0, 0, 0);
+  top: 50%;
+  left: 50%;
+  transform:translate(-50%,-50%) ;
+}
+.computer-cell.taken.damaged::after, .user-cell.damaged::after {
+  background-color: rgb(255, 0, 0);
+} 
+.expand-btn {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  background-color: #fff;
+  cursor: pointer;
+  border: 1px solid #01133f
+}
+.expand-btn .fas {
+  font-size: 20px;
+  color: #01133f;
+  padding: 2px;
+}
+.footer {
+  height: 50px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+.footer__inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.footer a {
+  cursor: pointer;
+}
+.footer__inner div {
+  width: 100px;
+  text-align: center;
+}
+.footer__inner div:first-child {
+  text-align: right;
+}
+.footer .fab, .footer img {
+  transition: all .2s ease;
+  font-size: 35px;
+  color: #000;
+}
+
+.footer .fab:hover, .footer img:hover {
+  transform: scale(1.2);
+}

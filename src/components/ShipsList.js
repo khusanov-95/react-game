@@ -9,9 +9,11 @@ function rotateShip(e) {
   setRotation(!isRotated);
   if(isRotated) {
     e.target.parentNode.style.display = 'inline-block';
+    e.target.parentNode.style.width = '33px';
     props.getIsVertical(isRotated)
   } else {
     e.target.parentNode.style.display = 'flex'
+    e.target.parentNode.style.width = '';
     props.getIsVertical(isRotated)
   }  
   
@@ -82,22 +84,22 @@ function carrier(pos) {
 
   return (
     <div className="ship-list">
-      <div>
+      <div className="destroyer-container">
         {destroyer('a')}
         {destroyer('b')}
         {destroyer('c')}
         {destroyer('d')}
       </div>
-      <div>
+      <div className="submarine-container">
         {submarine('a')}
         {submarine('b')}
         {submarine('c')}
       </div>
-      <div> 
+      <div className="battleship-container"> 
         {battleship('a')}
         {battleship('b')}
       </div>
-      <div> 
+      <div className="carrier-container"> 
         {carrier('a')}
       </div>
     </div>

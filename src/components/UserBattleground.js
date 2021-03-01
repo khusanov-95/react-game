@@ -84,14 +84,14 @@ function dragEndHandler(e) {
 }
 
 
-let computerCountDestroyer = 0;
-let computerCountSubmarine = 0;
-let computerCountBattleship = 0;
-let computerCountCarrier = 0;
+// let computerCountDestroyer = 0;
+// let computerCountSubmarine = 0;
+// let computerCountBattleship = 0;
+// let computerCountCarrier = 0;
 
+console.log(props.computerCountDestroyer,props.computerCountSubmarine,props.computerCountBattleship,props.computerCountCarrier)
 
 function revealUserCell() {
-  console.log('pc turn')
   props.setTurn('user');
   let random = Math.floor(userCells.length * Math.random());
  
@@ -102,10 +102,10 @@ function revealUserCell() {
       //     return cell
       //   })
       // )
-      if(!userCells[random].ClassName.includes('destroyer')) computerCountDestroyer ++
-      if(!userCells[random].ClassName.includes('submarine')) computerCountSubmarine ++
-      if(!userCells[random].ClassName.includes('battleship')) computerCountBattleship ++
-      if(!userCells[random].ClassName.includes('carrier')) computerCountCarrier ++
+      if(userCells[random].ClassName.includes('destroyer')) props.setComputerCountDestroyer(props.computerCountDestroyer +1)
+      if(userCells[random].ClassName.includes('submarine')) props.setComputerCountSubmarine(props.computerCountSubmarine +1)
+      if(userCells[random].ClassName.includes('battleship')) props.setComputerCountBattleship(props.computerCountBattleship +1)
+      if(userCells[random].ClassName.includes('carrier')) props.setComputerCountCarrier(props.computerCountCarrier +1)
 
       if(userCells[random].ClassName.includes('taken')) {
       setUserCells(
@@ -122,48 +122,43 @@ function revealUserCell() {
           })
         )
       }
-      // if(cell.ClassName.includes('taken')) {
-      //  cell.ClassName = `${cell.ClassName} damaged`;
-      //  e.target.className = `${cell.ClassName} damaged`
-      // } else {
-      //   e.target.className = `${cell.ClassName} missed`
-      //   cell.ClassName = `${cell.ClassName} missed`;
-      // }
     } 
       else  revealUserCell()
       
       // return
-
+    
 }
+
+// function getWinner() {
+      
+// }
 
 if(props.turn === 'computer' && !props.gameOver) setTimeout (revealUserCell, 1600) 
 
   return (
-    <div>
-    <div className="user-cells-container">
-      {userCells.map((user,i) => 
-      <div 
-        className={user.ClassName} 
-        key={i} 
-        id={`userCell-${i}`}
-        // onDragStart={(e) => dragStartHandler(e)}
-        onDragOver={(e) => dragOverHandler(e)}
-        onDragEnter={(e) => dragEnterHandler(e)}
-        onDragLeave={(e) => dragLeaveHandler(e)}
-        onDrop={(e) => dragDropHandler(e)}
-        onDragEnd={(e) => dragEndHandler(e)}
-        // ref={(element) => Refs.current.push(element)}
-        >{user.content}
-      
-      </div>)}
-     <ShipList 
-     selectedCellId = {shipCellId => setShipCellId(shipCellId)} 
-     getDragedShip = {dragedShip => setDragedShip(dragedShip)}
-     getIsVertical = {isVertical => setIsVertical(isVertical)}
-    //  getDragedShipLength = {dragedShipLength => setDragedShipLength(dragedShipLength)}
-     />
-    
-    </div>
+    <div className="user-battleground">
+      <div className="user-cells-container">
+        {userCells.map((user,i) => 
+        <div 
+          className={user.ClassName} 
+          key={i} 
+          id={`userCell-${i}`}
+          // onDragStart={(e) => dragStartHandler(e)}
+          onDragOver={(e) => dragOverHandler(e)}
+          onDragEnter={(e) => dragEnterHandler(e)}
+          onDragLeave={(e) => dragLeaveHandler(e)}
+          onDrop={(e) => dragDropHandler(e)}
+          onDragEnd={(e) => dragEndHandler(e)}
+          // ref={(element) => Refs.current.push(element)}
+          >{user.content}
+        </div>)}
+      </div>
+      <ShipList 
+        selectedCellId = {shipCellId => setShipCellId(shipCellId)} 
+        getDragedShip = {dragedShip => setDragedShip(dragedShip)}
+        getIsVertical = {isVertical => setIsVertical(isVertical)}
+        //  getDragedShipLength = {dragedShipLength => setDragedShipLength(dragedShipLength)}
+      />
     </div>
   )
 }
