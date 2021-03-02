@@ -4,12 +4,16 @@ import ShipList from './ShipsList';
 import './css/App.css';
 import './css/ShipList.css';
 const UserBattleground = (props) => {
+  console.log(props.restart)
   let row = 10;
   const [shipCellId, setShipCellId] = useState('');
   const [dragedShip, setDragedShip] = useState(null);
   const [isVertical, setIsVertical] = useState(false);
   const [userCells, setUserCells] = useState(Array.from( new Array(100), function() { return {ClassName: 'user-cell', content: '',}} ));
-
+  // console.log(props.gameOver)
+  if(props.restart) {
+    userCells.map(cell => cell.ClassName = 'user-cell');
+  }
 function dragOverHandler(e) {
   e.preventDefault()
   // console.log(cellId)
@@ -26,8 +30,9 @@ function dragLeaveHandler(e) {
 }
 
 function dragDropHandler(e){
-  let dragedShipCells = dragedShip.childNodes;
+  if(dragedShip !== null && dragedShip.className.includes('ship')) {
 
+  let dragedShipCells = dragedShip.childNodes;
   let shipCellLastId = dragedShipCells[dragedShip.childNodes.length - 1].id;
   let shipClass = shipCellLastId.slice(0, -4);
   let userCellIndex = +e.target.id.substr(9)
@@ -48,7 +53,11 @@ function dragDropHandler(e){
        if(ShipLastIdOnBoard < 100 && !userCells[userCellIndex - selectedShipId + i].ClassName.includes('taken')) {
         setUserCells(
           userCells.map((cell) => {
-            if(cell === userCells[userCellIndex - selectedShipId + i]) cell.ClassName = `user-cell taken ${shipClass}`
+            
+            if(cell === userCells[userCellIndex - selectedShipId + i]) {
+              props.setUserTakenShips(props.userTakenShips + 1)
+              cell.ClassName = `user-cell taken ${shipClass}`
+            }
             return cell
           })
         )
@@ -62,6 +71,7 @@ function dragDropHandler(e){
         setUserCells(
           userCells.map((cell) => {
             if(cell === userCells[(userCellIndex - row * selectedShipId)+ row * i]) {
+              props.setUserTakenShips(props.userTakenShips + 1)
               cell.ClassName = `user-cell taken ${shipClass}`
             } 
             return cell
@@ -74,8 +84,12 @@ function dragDropHandler(e){
   return 
   }
   // remove ship from ship list
-  dragedShip.style.display = 'none';
+  if(!dragedShip.className.includes('hide')) dragedShip.className = `${dragedShip.className} hide`;
   setIsVertical(false)
+  } else {
+    setDragedShip(null);
+  }
+  
 }
 
 
@@ -84,12 +98,6 @@ function dragEndHandler(e) {
 }
 
 
-// let computerCountDestroyer = 0;
-// let computerCountSubmarine = 0;
-// let computerCountBattleship = 0;
-// let computerCountCarrier = 0;
-
-console.log(props.computerCountDestroyer,props.computerCountSubmarine,props.computerCountBattleship,props.computerCountCarrier)
 
 function revealUserCell() {
   props.setTurn('user');
@@ -133,7 +141,7 @@ function revealUserCell() {
       
 // }
 
-if(props.turn === 'computer' && !props.gameOver) setTimeout (revealUserCell, 1600) 
+if(props.turn === 'computer' && !props.gameOver && props.startGame || props.turn === 'computer' && !props.restart && props.startGame) setTimeout (revealUserCell, 1600) 
 
   return (
     <div className="user-battleground">
@@ -149,11 +157,13 @@ if(props.turn === 'computer' && !props.gameOver) setTimeout (revealUserCell, 160
           onDragLeave={(e) => dragLeaveHandler(e)}
           onDrop={(e) => dragDropHandler(e)}
           onDragEnd={(e) => dragEndHandler(e)}
+          // onMouseUp={(e) => setDragedShip(null)}
           // ref={(element) => Refs.current.push(element)}
           >{user.content}
         </div>)}
       </div>
-      <ShipList 
+      <ShipList
+        restart = {props.restart}
         selectedCellId = {shipCellId => setShipCellId(shipCellId)} 
         getDragedShip = {dragedShip => setDragedShip(dragedShip)}
         getIsVertical = {isVertical => setIsVertical(isVertical)}

@@ -9,8 +9,12 @@ let computerCells = Array.from( new Array(100), function() { return {ClassName: 
 let countRenders = 0;
 
 const ComputerBattleGround = (props) => {
-  countRenders ++;
-  if(countRenders < 2) {
+  if (props.restart) {
+    countRenders = 0;
+    computerCells.map(cell => cell.ClassName = "computer-cell");
+  }
+  if(!props.restart && countRenders < 1) {
+    countRenders ++;
     GenerateShips(ArrayOfShips[0],computerCells,row);
     GenerateShips(ArrayOfShips[0],computerCells,row);
     GenerateShips(ArrayOfShips[0],computerCells,row);
@@ -22,16 +26,13 @@ const ComputerBattleGround = (props) => {
     GenerateShips(ArrayOfShips[2],computerCells,row);
     GenerateShips(ArrayOfShips[3],computerCells,row);
   }
+    
+  
 
 //playing
 
-
-
-
-
-
     function revealComputerCell(cell,e) {
-  if(props.turn === 'user' && !props.gameOver) {
+  if(props.turn === 'user' && !props.gameOver && props.startGame || props.turn === 'user' && !props.restart && props.startGame) {
     if(!e.target.className.includes('damaged') && !e.target.className.includes('missed')) {
       if(cell.ClassName.includes('destroyer')) props.setCountDestroyer(props.countDestroyer +1)
       if(cell.ClassName.includes('submarine')) props.setCountSubmarine(props.countSubmarine +1)

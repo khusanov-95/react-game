@@ -41,12 +41,12 @@ img {
 .starting-page__inner > div {
   width: 400px;
 }
-.starting-divage__btn {
+.starting-page__btn {
   text-align: center;
   position: relative;
   
 }
-.starting-divage__btn:after {
+.starting-page__btn:after {
   content: '';
   width: 100%;
   height: 1px;
@@ -55,7 +55,7 @@ img {
   bottom: 5%;
   background-color: rgba(29, 29, 29, 0.979);
 }
-.starting-divage__btn button {
+.starting-page__btn button {
   border: none;
   background-color: rgb(56, 158, 111);
   color: rgba(29, 29, 29, 0.979);
@@ -64,7 +64,7 @@ img {
   z-index: 1;
   transition: all .2s ease;
 }
-.starting-divage__btn button:hover {
+.starting-page__btn button:hover {
   transform: scale(1.2);
   color:yellowgreen;
   font-weight: bold;
@@ -74,6 +74,18 @@ img {
   width: 100%;
   background-color: rgba(29, 29, 29, 0.979);
   margin-top: 25px;
+}
+.turn {
+  position: absolute;
+  top: 4%;
+}
+.turn .fa-user {
+  font-size: 24px;
+  color: #1f5fff;
+}
+.turn .fa-robot {
+  font-size: 24px;
+  color: rgb(255, 0, 0)
 }
 .user-battleground {
   display: flex;
@@ -114,7 +126,7 @@ img {
   cursor: pointer;
 }
 .computer-cell.taken {
-  background-color: rgb(255, 255, 255);
+  /* background-color: rgb(255, 255, 255); */
   border-color: rgb(84, 190, 216);;
 } 
 .computer-cell.taken.damaged, .user-cell.damaged  {
@@ -151,6 +163,21 @@ img {
   color: #01133f;
   padding: 2px;
 }
+.start-battle-btn {
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  color: #01133f;
+  font-weight: bold;
+  padding: 5px;
+  cursor: pointer;
+  transition: color .2s ease;
+}
+.start-battle-btn:hover {
+  color:rgb(255, 0, 0)
+}
 .footer {
   height: 50px;
   width: 100%;
@@ -180,4 +207,48 @@ img {
 
 .footer .fab:hover, .footer img:hover {
   transform: scale(1.2);
+}
+.game-over-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.winner h2 {
+  color: #fff;
+  font-size: 30px;
+}
+.startAgain-btn {
+  font-size: 16px;
+  color: #01133f;
+  font-weight: bold;
+  padding: 5px;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.startAgain-btn:hover {
+  transform: scale(1.2);
+}
+
+@media only screen and (max-height: 685px) {
+  .turn {
+    top: 80%;
+  }
+}
+@media only screen and (max-width: 805px) {
+  .turn {
+    top: 46%;
+  }
+  .start-battle-btn {
+    bottom: 55%;
+  }
+  .footer {
+    bottom: 60px; 
+  }
 }

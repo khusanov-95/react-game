@@ -20,7 +20,12 @@ function rotateShip(e) {
 }
 
 function dragStart(e) {
-  props.getDragedShip(e.target)
+  console.log(e.target)
+  if(e.target.className.includes('ship') ) {
+    props.getDragedShip(e.target)
+  } else {
+    props.getDragedShip(e.target.parentNode)
+  }
   // setTimeout(() => {  
   //   e.target.style.display = "none";
   // },0); // in order to hide ship when its dragged
@@ -29,7 +34,7 @@ function dragStart(e) {
 function destroyer(pos) {
   return(
     <div 
-    className="destroyer ship" 
+    className={`destroyer ship ${props.restart ? 'show' : ''}`}
     draggable={true}
     onMouseDown={(e) => props.selectedCellId(e.target.id)}
     onDragStart={dragStart}
@@ -41,7 +46,8 @@ function destroyer(pos) {
 
 function submarine(pos) {
   return(
-    <div className={`submarine ship`} 
+    <div 
+    className={`submarine ship ${props.restart ? 'show' : ''}`} 
     draggable={true} 
     onDoubleClick={rotateShip}
     onMouseDown={(e) => props.selectedCellId(e.target.id)}
@@ -54,7 +60,7 @@ function submarine(pos) {
 }
 function battleship(pos) {
   return(
-    <div className="battleship ship" 
+    <div className={`battleship ship ${props.restart ? 'show' : ''}`} 
     draggable={true} 
     onDoubleClick={rotateShip}
     onMouseDown={(e) => props.selectedCellId(e.target.id)}
@@ -68,7 +74,7 @@ function battleship(pos) {
 }
 function carrier(pos) {
   return(
-    <div className="carrier ship" 
+    <div className={`carrier ship ${props.restart ? 'show' : ''}`}
     draggable={true} 
     onDoubleClick={rotateShip}
     onMouseDown={(e) => props.selectedCellId(e.target.id)}
@@ -81,25 +87,24 @@ function carrier(pos) {
     </div>
   );
 }
-
   return (
     <div className="ship-list">
-      <div className="destroyer-container">
+      <div className="destroyer-container ship-container">
         {destroyer('a')}
         {destroyer('b')}
         {destroyer('c')}
         {destroyer('d')}
       </div>
-      <div className="submarine-container">
+      <div className="submarine-container ship-container">
         {submarine('a')}
         {submarine('b')}
         {submarine('c')}
       </div>
-      <div className="battleship-container"> 
+      <div className="battleship-container ship-container"> 
         {battleship('a')}
         {battleship('b')}
       </div>
-      <div className="carrier-container"> 
+      <div className="carrier-container ship-container"> 
         {carrier('a')}
       </div>
     </div>
