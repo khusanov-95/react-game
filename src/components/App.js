@@ -4,6 +4,7 @@ import UserBattleground from './UserBattleground';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import useSound from 'use-sound';
 import mainMusic from '../sounds/Pirates.mp3';
+import gong from '../sounds/gong.mp3';
 
 import './css/App.css'
 import './css/ShipList.css'
@@ -14,7 +15,7 @@ let winner = '';
 const App = () => {
   const [openGame, setOpenGame] = useState('notStarted'); // open game when single player clicked
   const [startGame, setStartGame] = useState(false); // start game when Start Battle clicked
-  const [turn, setTurn] = useState('user');//set turns
+  const [turn, setTurn] = useState('');//set turns
   const [userTakenShips, setUserTakenShips] = useState(0);// count ships droped on board
 
   //count destroyed ship cells of each type and each sides(computer,user)
@@ -28,13 +29,19 @@ const App = () => {
   const [computerCountBattleship, setComputerCountBattleship] = useState(0);
   const [computerCountCarrier, setComputerCountCarrier] = useState(0);
   const [restart, setRestart] = useState(false);// restarts the game
+  const [settingsOpened, setSettingsOpened] = useState(false);
 
-  const [volume, setVolume] = useState(false)
+  const [volume, setVolume] = useState(false);
+  const [soundVolume, setSoundVolume] = useState(false)
 
   const [playMain] = useSound(
     mainMusic,
     {volume: volume ? (0.5) : (0)}
     );
+  const [playGong] = useSound(
+    gong,
+    {volume: soundVolume ? (0.5) : (0)}
+  )
   //when all ships are destroyed => set the winner, finish the game
   if(countDestroyer + countSubmarine + countBattleship + countCarrier === 20) {
       gameOver = true;
@@ -51,6 +58,8 @@ const App = () => {
   function startTheGame() { // start game if all ships are droped on board
     if(userTakenShips === 10) {
       setStartGame(true);
+      playGong();
+      setTurn('user')
     } else alert('Set all your ships to start a battle');
   }
 
@@ -59,7 +68,7 @@ const App = () => {
     playMain();
     setInterval(() => {
       playMain();
-    },70000);
+    },28000);
   }
 
   function handleRestartAgainBtn(e) { // restar the game on click
@@ -107,6 +116,7 @@ const App = () => {
                 computerCountBattleship={computerCountBattleship} setComputerCountBattleship={setComputerCountBattleship}
                 computerCountCarrier={computerCountCarrier} setComputerCountCarrier={setComputerCountCarrier}
                 restart={restart} setRestart={setRestart}
+                soundVolume={soundVolume}
                 />
               <ComputerBattleGround 
                 turn={turn} setTurn={setTurn}
@@ -117,14 +127,27 @@ const App = () => {
                 countBattleship={countBattleship} setCountBattleship={setCountBattleship}
                 countCarrier={countCarrier} setCountCarrier={setCountCarrier}
                 restart={restart}
+                soundVolume={soundVolume}
                 /> 
               <div>
                 {startGame ? ('') : (<button className="start-battle-btn" onClick={startTheGame}>Start Battle</button>)}
               </div>
               <div className="sideOptions-container">
                 {handle.active ? ('') : (<button className="expand-btn" onClick={handle.enter}><i className="fas fa-expand-arrows-alt"></i></button>)}
-                <button className="sound-volume" onClick={() => setVolume(!volume)}>{volume ? (<i className="fas fa-volume-down"></i>) : (<i className="fas fa-volume-mute"></i>)}</button>     
+                <button className="settings" onClick={() => setSettingsOpened(true)}><i className="fas fa-cog"></i></button>
               </div>
+              {settingsOpened ? (
+                <div className="settings-container">
+                  <button className="settings-close" onClick={() => setSettingsOpened(false)}><i className="fas fa-window-close"></i></button>
+                  <div className="music-settings-container">
+                  <span>Music :</span> <button className="sound-volume" onClick={() => setVolume(!volume)}>{volume ? (<i className="fas fa-volume-down"></i>) : (<i className="fas fa-volume-mute"></i>)}</button>     
+                  </div>
+                  <div className="music-settings-container">
+                  <span>Sounds :</span> <button className="sound-volume" onClick={() => setSoundVolume(!soundVolume)}>{soundVolume ? (<i className="fas fa-volume-down"></i>) : (<i className="fas fa-volume-mute"></i>)}</button>     
+                  </div>
+                </div>
+              ): ('')}
+             
               <footer className="footer">
                 <div className="footer__inner">
                 <div><a href="https://github.com/khusanov-95"><i className="fab fa-github-square"></i></a></div>

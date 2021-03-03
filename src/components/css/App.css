@@ -156,17 +156,46 @@ img {
   display: flex;
   flex-direction: column;
 }
-.expand-btn, .sound-volume  {
+.expand-btn, .sound-volume, .settings {
   margin-bottom: 5px;
   background-color: #fff;
   cursor: pointer;
   border: 1px solid #01133f
 }
-
-.expand-btn .fas, .sound-volume .fas {
+.settings-close {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  position: absolute;
+  top: 5%;
+  right: 5%;
+}
+.settings-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgb(56, 158, 111);
+  /* z-index: 5; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
+.settings-container span {
+  font-weight: bold;
+  font-size: 20px;
+}
+.expand-btn .fas, .sound-volume .fas, .settings .fas {
   font-size: 20px;
   color: #01133f;
   padding: 2px;
+}
+.settings-close .fas {
+  font-size: 34px;
+  color: #fff;
 }
 .start-battle-btn {
   position: absolute;

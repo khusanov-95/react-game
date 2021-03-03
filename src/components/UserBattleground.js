@@ -1,13 +1,13 @@
-import React ,{useState}from 'react';
+import React ,{useState, useEffect} from 'react';
 import ShipList from './ShipsList';
 import DragDropHandler from './DragDropHandler'
 import useSound from 'use-sound';
 import shipDestroyedSound from '../sounds/damage.mp3';
 import blop from '../sounds/blop.mp3';
+import drop from '../sounds/drop.mp3';
 
 import './css/App.css';
 import './css/ShipList.css';
-
 
 const UserBattleground = (props) => {
   //initialize cell row, ship cell id, get draged ship from shiplist.js, create 100 cells
@@ -16,14 +16,17 @@ const UserBattleground = (props) => {
   const [dragedShip, setDragedShip] = useState(null);
   const [isVertical, setIsVertical] = useState(false);
   const [userCells, setUserCells] = useState(Array.from( new Array(100), function() { return {ClassName: 'user-cell', content: '',}} ));
-  
   const [playDamage] = useSound(
     shipDestroyedSound,
-    {volume: 0.5}
+    {volume: props.soundVolume ? (0.5) : (0)}
   )
   const [playBlop] = useSound(
     blop,
-    {volume: 0.5}
+    {volume: props.soundVolume ? (0.5) : (0)}
+  )
+  const [playDrop] = useSound(
+    drop,
+    {volume: props.soundVolume ? (0.4) : (0)}
   )
   //if game is restarted recreate cells
   if(props.restart) {
@@ -31,13 +34,11 @@ const UserBattleground = (props) => {
   }
 
 
-
 function revealUserCell() {
-
   if(props.turn === 'computer') {
     props.setTurn('user');
     let random = Math.floor(userCells.length * Math.random());
- 
+
     if(!userCells[random].ClassName.includes('damaged') && !userCells[random].ClassName.includes('missed')) {
 
       if(userCells[random].ClassName.includes('destroyer')) props.setComputerCountDestroyer(props.computerCountDestroyer +1)
@@ -62,16 +63,17 @@ function revealUserCell() {
         )
         playBlop();
       }
-    } 
-      else  revealUserCell()
-
-    
-  }
-  
+    } else  revealUserCell()
+  }  
 }
 
-console.log(props.turn)
-if(props.turn === 'computer' && !props.gameOver && props.startGame || props.turn === 'computer' && !props.restart && props.startGame) setTimeout (revealUserCell, 1600) 
+useEffect(() => {
+  if(!props.gameOver && props.startGame|| !props.restart && props.startGame) {
+  setTimeout(() => {
+    revealUserCell();
+  }, 1000)
+}
+},[props.turn])
 
   return (
     <div className="user-battleground">
@@ -83,7 +85,7 @@ if(props.turn === 'computer' && !props.gameOver && props.startGame || props.turn
           id={`userCell-${i}`}
           onDragOver={(e) => e.preventDefault()}
           onDragEnter={(e) => e.preventDefault()}
-          onDrop={(e) => DragDropHandler(e,shipCellId,dragedShip,setDragedShip,isVertical,setIsVertical,userCells,setUserCells,row,props)} // from DragDropHandler.js
+          onDrop={(e) => DragDropHandler(e,shipCellId,dragedShip,setDragedShip,isVertical,setIsVertical,userCells,setUserCells,row,props, playDrop)} // from DragDropHandler.js
           onDragEnd={(e) => e.preventDefault}
           >{user.content}
         </div>)}
@@ -98,8 +100,5 @@ if(props.turn === 'computer' && !props.gameOver && props.startGame || props.turn
     </div>
   )
 }
-
-
-
 
 export default UserBattleground; 

@@ -1,4 +1,4 @@
-function DragDropHandler(e,shipCellId,dragedShip,setDragedShip,isVertical,setIsVertical,userCells,setUserCells,row,props){
+function DragDropHandler(e,shipCellId,dragedShip,setDragedShip,isVertical,setIsVertical,userCells,setUserCells,row,props, playDrop){
   if(dragedShip !== null && dragedShip.className.includes('ship')) {
   //1)initialize which ship cells are taken, 2)id of ship cells, 3)class of ship, 
   // 4)id of cell ship is droped, 5)id of last ship cell, 6)id of cell where last ship cell was droped,
@@ -32,6 +32,7 @@ function DragDropHandler(e,shipCellId,dragedShip,setDragedShip,isVertical,setIsV
             return cell
           })
         )
+        playDrop();
        } 
        else return 
     }
@@ -49,6 +50,7 @@ function DragDropHandler(e,shipCellId,dragedShip,setDragedShip,isVertical,setIsV
             return cell
           })
         )
+        playDrop();
       }
       else return 
     }

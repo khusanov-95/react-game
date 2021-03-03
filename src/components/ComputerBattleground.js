@@ -17,11 +17,11 @@ let countRenders = 0;
 const ComputerBattleGround = (props) => {
   const [playDamage] = useSound(
     shipDestroyedSound,
-    {volume: 0.5}
+    {volume: props.soundVolume ? (0.5) : (0)}
   )
   const [playBlop] = useSound(
     blop,
-    {volume: 0.5}
+    {volume: props.soundVolume ? (0.5) : (0)}
   )
 
   if (props.restart) {
@@ -59,7 +59,7 @@ const ComputerBattleGround = (props) => {
         cell.ClassName = `${cell.ClassName} missed`;
         playBlop()
       }
-      props.setTurn('computer');
+      setTimeout(props.setTurn('computer'),0);
     }
     }
   }
@@ -76,7 +76,6 @@ const ComputerBattleGround = (props) => {
         >{computerCell.content}
       </div>)}
     </div>
-    {console.log(props.countDestroyer, props.countSubmarine, props.countBattleship, props.countCarrier)}
     <div className="destroyed-ships">
                   {props.countDestroyer === 1 ? (
                     <div className="destroyed-ship destroyed-destroyer">
