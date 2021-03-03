@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import ComputerBattleGround from './ComputerBattleground';
 import UserBattleground from './UserBattleground';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
+import useSound from 'use-sound';
+import mainMusic from '../sounds/Pirates.mp3';
+
 import './css/App.css'
 import './css/ShipList.css'
 
@@ -25,6 +28,13 @@ const App = () => {
   const [computerCountBattleship, setComputerCountBattleship] = useState(0);
   const [computerCountCarrier, setComputerCountCarrier] = useState(0);
   const [restart, setRestart] = useState(false);// restarts the game
+
+  const [volume, setVolume] = useState(false)
+
+  const [playMain] = useSound(
+    mainMusic,
+    {volume: volume ? (0.5) : (0)}
+    );
   //when all ships are destroyed => set the winner, finish the game
   if(countDestroyer + countSubmarine + countBattleship + countCarrier === 20) {
       gameOver = true;
@@ -42,6 +52,14 @@ const App = () => {
     if(userTakenShips === 10) {
       setStartGame(true);
     } else alert('Set all your ships to start a battle');
+  }
+
+  function handleStartingPage() {
+    setOpenGame('started');
+    playMain();
+    setInterval(() => {
+      playMain();
+    },70000);
   }
 
   function handleRestartAgainBtn(e) { // restar the game on click
@@ -103,8 +121,9 @@ const App = () => {
               <div>
                 {startGame ? ('') : (<button className="start-battle-btn" onClick={startTheGame}>Start Battle</button>)}
               </div>
-              <div>
-                {handle.active ? ('') : (<button className="expand-btn" onClick={handle.enter}><i className="fas fa-expand-arrows-alt"></i></button>)}     
+              <div className="sideOptions-container">
+                {handle.active ? ('') : (<button className="expand-btn" onClick={handle.enter}><i className="fas fa-expand-arrows-alt"></i></button>)}
+                <button className="sound-volume" onClick={() => setVolume(!volume)}>{volume ? (<i className="fas fa-volume-down"></i>) : (<i className="fas fa-volume-mute"></i>)}</button>     
               </div>
               <footer className="footer">
                 <div className="footer__inner">
@@ -130,7 +149,7 @@ const App = () => {
               <div className="starting-page__inner">
               <h2>Battle ship</h2>
                 <div>
-                  <div className="starting-page__btn"><button onClick={() => setOpenGame('started')}>Single Player</button></div>
+                  <div className="starting-page__btn"><button onClick={handleStartingPage}>Single Player</button></div>
                   <div className="notebook-line"></div>
                   <div className="notebook-line"></div>
                   <div className="notebook-line"></div>

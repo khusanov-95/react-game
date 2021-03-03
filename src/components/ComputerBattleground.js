@@ -1,6 +1,10 @@
 import React from 'react';
 import ArrayOfShips from './ArrayOfShips';
-import GenerateShips from './GenerateShips'
+import GenerateShips from './GenerateShips';
+
+import useSound from 'use-sound';
+import shipDestroyedSound from '../sounds/damage.mp3';
+import blop from '../sounds/blop.mp3';
 
 import './css/App.css';
 
@@ -11,6 +15,15 @@ let countRenders = 0;
 
 // generate ships or regenerate if game is restarted
 const ComputerBattleGround = (props) => {
+  const [playDamage] = useSound(
+    shipDestroyedSound,
+    {volume: 0.5}
+  )
+  const [playBlop] = useSound(
+    blop,
+    {volume: 0.5}
+  )
+
   if (props.restart) {
     countRenders = 0;
     computerCells.map(cell => cell.ClassName = "computer-cell");
@@ -33,16 +46,23 @@ const ComputerBattleGround = (props) => {
   function revealComputerCell(cell,e) { 
   if(props.turn === 'user' && !props.gameOver && props.startGame || props.turn === 'user' && !props.restart && props.startGame) {
     if(!e.target.className.includes('damaged') && !e.target.className.includes('missed')) {
-      if(cell.ClassName.includes('destroyer')) props.setCountDestroyer(props.countDestroyer +1)
-      if(cell.ClassName.includes('submarine')) props.setCountSubmarine(props.countSubmarine +1)
+      if(cell.ClassName.includes('destroyer')) {
+        props.setCountDestroyer(props.countDestroyer +1)
+    
+      }
+      if(cell.ClassName.includes('submarine')) {
+
+      } props.setCountSubmarine(props.countSubmarine +1)
       if(cell.ClassName.includes('battleship')) props.setCountBattleship(props.countBattleship +1)
       if(cell.ClassName.includes('carrier')) props.setCountCarrier(props.countCarrier +1)
       if(cell.ClassName.includes('taken')) {
        cell.ClassName = `${cell.ClassName} damaged`;
-       e.target.className = `${cell.ClassName} damaged`
+       e.target.className = `${cell.ClassName} damaged`;
+       playDamage()
       } else {
         e.target.className = `${cell.ClassName} missed`
         cell.ClassName = `${cell.ClassName} missed`;
+        playBlop()
       }
       props.setTurn('computer');
     }

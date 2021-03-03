@@ -1,6 +1,9 @@
 import React ,{useState}from 'react';
 import ShipList from './ShipsList';
 import DragDropHandler from './DragDropHandler'
+import useSound from 'use-sound';
+import shipDestroyedSound from '../sounds/damage.mp3';
+import blop from '../sounds/blop.mp3';
 
 import './css/App.css';
 import './css/ShipList.css';
@@ -13,6 +16,15 @@ const UserBattleground = (props) => {
   const [dragedShip, setDragedShip] = useState(null);
   const [isVertical, setIsVertical] = useState(false);
   const [userCells, setUserCells] = useState(Array.from( new Array(100), function() { return {ClassName: 'user-cell', content: '',}} ));
+  
+  const [playDamage] = useSound(
+    shipDestroyedSound,
+    {volume: 0.5}
+  )
+  const [playBlop] = useSound(
+    blop,
+    {volume: 0.5}
+  )
   //if game is restarted recreate cells
   if(props.restart) {
     userCells.map(cell => cell.ClassName = 'user-cell');
@@ -34,10 +46,11 @@ function revealUserCell() {
       if(userCells[random].ClassName.includes('taken')) {
       setUserCells(
         userCells.map((cell) => {
-          if(cell === userCells[random]) cell.ClassName = `${cell.ClassName} damaged`
+          if(cell === userCells[random]) cell.ClassName = `${cell.ClassName} damaged`;
           return cell
         })
       )
+      playDamage();
       } else {
         setUserCells(
           userCells.map((cell) => {
@@ -45,6 +58,7 @@ function revealUserCell() {
             return cell
           })
         )
+        playBlop();
       }
     } 
       else  revealUserCell()

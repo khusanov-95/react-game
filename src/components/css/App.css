@@ -148,16 +148,22 @@ img {
 }
 .computer-cell.taken.damaged::after, .user-cell.damaged::after {
   background-color: rgb(255, 0, 0);
-} 
-.expand-btn {
+}
+.sideOptions-container {
   position: absolute;
   top: 5%;
   left: 5%;
+  display: flex;
+  flex-direction: column;
+}
+.expand-btn, .sound-volume  {
+  margin-bottom: 5px;
   background-color: #fff;
   cursor: pointer;
   border: 1px solid #01133f
 }
-.expand-btn .fas {
+
+.expand-btn .fas, .sound-volume .fas {
   font-size: 20px;
   color: #01133f;
   padding: 2px;
