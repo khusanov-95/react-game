@@ -33,8 +33,10 @@ const UserBattleground = (props) => {
 
 
 function revealUserCell() {
-  props.setTurn('user');
-  let random = Math.floor(userCells.length * Math.random());
+
+  if(props.turn === 'computer') {
+    props.setTurn('user');
+    let random = Math.floor(userCells.length * Math.random());
  
     if(!userCells[random].ClassName.includes('damaged') && !userCells[random].ClassName.includes('missed')) {
 
@@ -64,9 +66,11 @@ function revealUserCell() {
       else  revealUserCell()
 
     
+  }
+  
 }
 
-
+console.log(props.turn)
 if(props.turn === 'computer' && !props.gameOver && props.startGame || props.turn === 'computer' && !props.restart && props.startGame) setTimeout (revealUserCell, 1600) 
 
   return (

@@ -46,13 +46,8 @@ const ComputerBattleGround = (props) => {
   function revealComputerCell(cell,e) { 
   if(props.turn === 'user' && !props.gameOver && props.startGame || props.turn === 'user' && !props.restart && props.startGame) {
     if(!e.target.className.includes('damaged') && !e.target.className.includes('missed')) {
-      if(cell.ClassName.includes('destroyer')) {
-        props.setCountDestroyer(props.countDestroyer +1)
-    
-      }
-      if(cell.ClassName.includes('submarine')) {
-
-      } props.setCountSubmarine(props.countSubmarine +1)
+      if(cell.ClassName.includes('destroyer')) props.setCountDestroyer(props.countDestroyer +1)
+      if(cell.ClassName.includes('submarine')) props.setCountSubmarine(props.countSubmarine +1)
       if(cell.ClassName.includes('battleship')) props.setCountBattleship(props.countBattleship +1)
       if(cell.ClassName.includes('carrier')) props.setCountCarrier(props.countCarrier +1)
       if(cell.ClassName.includes('taken')) {
@@ -81,6 +76,7 @@ const ComputerBattleGround = (props) => {
         >{computerCell.content}
       </div>)}
     </div>
+    {console.log(props.countDestroyer, props.countSubmarine, props.countBattleship, props.countCarrier)}
     <div className="destroyed-ships">
                   {props.countDestroyer === 1 ? (
                     <div className="destroyed-ship destroyed-destroyer">
