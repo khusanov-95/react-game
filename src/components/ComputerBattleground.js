@@ -63,7 +63,7 @@ const ComputerBattleGround = (props) => {
     }
     }
   }
-
+  
   return (
     <div className="computer-battleground">
       <div className="computer-cells-container">

@@ -12,8 +12,7 @@ function DragDropHandler(e,shipCellId,dragedShip,setDragedShip,isVertical,setIsV
   let selectedShipId = +shipCellId.substr(-1);
   // shipLastIdOnBoardVertical
   let ShipLastIdOnBoardVertical =  (ShipLastIdOnBoard - (dragedShipCells.length - 1)) + (10 * ShipLastIndex);
-
-  ShipLastIdOnBoard = ShipLastIdOnBoard - selectedShipId; 
+  ShipLastIdOnBoard = ShipLastIdOnBoard - selectedShipId;
   ShipLastIdOnBoardVertical = ShipLastIdOnBoardVertical - selectedShipId * 10;
   let ShipNotAllowedHorizontal = [0,10,20,30,40,50,60,70,80,90,1,11,21,31,41,51,61,71,81,91,2,12,22,32,42,52,62,72,82,92].splice(0, 10 * ShipLastIndex) // preventse ship to go to next row cells horizontally
   // horizontal part of logic (!isVertical if check logic) was partially taken from https://github.com/kubowania/battleships/blob/master/public/singleplayer.html
@@ -25,7 +24,7 @@ function DragDropHandler(e,shipCellId,dragedShip,setDragedShip,isVertical,setIsV
         setUserCells(
           userCells.map((cell) => {
             
-            if(cell === userCells[userCellIndex - selectedShipId + i]) {
+            if(cell === userCells[userCellIndex - selectedShipId + i] && !userCells[ShipLastIdOnBoard].ClassName.includes('taken')) {
               props.setUserTakenShips(props.userTakenShips + 1)
               cell.ClassName = `user-cell taken ${shipClass}`
             }
@@ -43,7 +42,7 @@ function DragDropHandler(e,shipCellId,dragedShip,setDragedShip,isVertical,setIsV
       if(ShipLastIdOnBoardVertical < 100 && ShipLastIdOnBoardVertical > row * (dragedShipCells.length - 1) && !userCells[(userCellIndex - row * selectedShipId)+ row * i].ClassName.includes('taken')) {
         setUserCells(
           userCells.map((cell) => {
-            if(cell === userCells[(userCellIndex - row * selectedShipId)+ row * i]) {
+            if(cell === userCells[(userCellIndex - row * selectedShipId)+ row * i] && !userCells[ShipLastIdOnBoardVertical].ClassName.includes('taken')) {
               props.setUserTakenShips(props.userTakenShips + 1)
               cell.ClassName = `user-cell taken ${shipClass}`
             } 

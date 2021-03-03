@@ -87,6 +87,9 @@ img {
   font-size: 24px;
   color: rgb(255, 0, 0)
 }
+.turn span {
+  font-size: 20px;
+}
 .user-battleground {
   display: flex;
   flex-direction: column;
@@ -125,7 +128,7 @@ img {
   cursor: pointer;
 }
 .computer-cell.taken {
-  /* background-color: rgb(255, 255, 255); */
+  background-color: rgb(255, 255, 255);
   border-color: rgb(84, 190, 216);;
 } 
 .computer-cell.taken.damaged, .user-cell.damaged  {
