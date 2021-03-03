@@ -46,7 +46,7 @@ function submarine(pos) {
     style={props.gameOver ? {display: "flex", width: ""} : {}} 
     className={`submarine ship ${props.restart ? 'show' : ''}`} 
     draggable={true} 
-    onDoubleClick={rotateShip}
+    onClick={rotateShip}
     onMouseDown={(e) => props.selectedCellId(e.target.id)}
     onDragStart={dragStart}
     onDragEnd={() => props.getDragedShip(null)}
@@ -62,7 +62,7 @@ function battleship(pos) {
     style={props.gameOver ? {display: "flex", width: ""} : {}} 
     className={`battleship ship ${props.restart ? 'show' : ''}`} 
     draggable={true} 
-    onDoubleClick={rotateShip}
+    onClick={rotateShip}
     onMouseDown={(e) => props.selectedCellId(e.target.id)}
     onDragStart={dragStart}
     onDragEnd={(e) => props.getDragedShip(null)}
@@ -79,7 +79,7 @@ function carrier(pos) {
     style={props.gameOver ? {display:"flex", width: ""} : {}} 
     className={`carrier ship ${props.restart ? 'show' : ''}`}
     draggable={true} 
-    onDoubleClick={rotateShip}
+    onClick={rotateShip}
     onMouseDown={(e) => props.selectedCellId(e.target.id)}
     onDragStart={dragStart}
     onDragEnd={(e) => props.getDragedShip(null)} 
