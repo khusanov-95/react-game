@@ -24,9 +24,7 @@ const App = () => {
   const [computerCountSubmarine, setComputerCountSubmarine] = useState(0);
   const [computerCountBattleship, setComputerCountBattleship] = useState(0);
   const [computerCountCarrier, setComputerCountCarrier] = useState(0);
-
   const [restart, setRestart] = useState(false);// restarts the game
-  console.log(countDestroyer,countSubmarine,countBattleship,countCarrier);
   //when all ships are destroyed => set the winner, finish the game
   if(countDestroyer + countSubmarine + countBattleship + countCarrier === 20) {
       gameOver = true;

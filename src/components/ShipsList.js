@@ -34,6 +34,7 @@ function destroyer(pos) {
     draggable={true}
     onMouseDown={(e) => props.selectedCellId(e.target.id)}
     onDragStart={dragStart}
+    onDragEnd={() => props.getDragedShip(null)}
     >
       <div id={`destroyer-${pos}-0`} ></div>
     </div>
@@ -47,7 +48,8 @@ function submarine(pos) {
     draggable={true} 
     onDoubleClick={rotateShip}
     onMouseDown={(e) => props.selectedCellId(e.target.id)}
-    onDragStart={dragStart} // or children
+    onDragStart={dragStart}
+    onDragEnd={() => props.getDragedShip(null)}
     >
       <div id={`submarine-${pos}-0` }></div>
       <div id={`submarine-${pos}-1` }></div>
@@ -63,6 +65,7 @@ function battleship(pos) {
     onDoubleClick={rotateShip}
     onMouseDown={(e) => props.selectedCellId(e.target.id)}
     onDragStart={dragStart}
+    onDragEnd={(e) => props.getDragedShip(null)}
      >
       <div id={`battleship-${pos}-0`}></div>
       <div id={`battleship-${pos}-1`}></div>
@@ -78,7 +81,8 @@ function carrier(pos) {
     draggable={true} 
     onDoubleClick={rotateShip}
     onMouseDown={(e) => props.selectedCellId(e.target.id)}
-    onDragStart={dragStart} 
+    onDragStart={dragStart}
+    onDragEnd={(e) => props.getDragedShip(null)} 
     >
       <div id={`carrier-${pos}-0`}></div>
       <div id={`carrier-${pos}-1`}></div>

@@ -66,7 +66,7 @@ if(props.turn === 'computer' && !props.gameOver && props.startGame || props.turn
           onDragOver={(e) => e.preventDefault()}
           onDragEnter={(e) => e.preventDefault()}
           onDrop={(e) => DragDropHandler(e,shipCellId,dragedShip,setDragedShip,isVertical,setIsVertical,userCells,setUserCells,row,props)} // from DragDropHandler.js
-
+          onDragEnd={(e) => e.preventDefault}
           >{user.content}
         </div>)}
       </div>
