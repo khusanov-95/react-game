@@ -31,6 +31,7 @@
   background-color: #3566e0;
   border-color: #3566e0;
 }
+
 .submarine {
   background-color: #1d42a1;
   border-color: #1d42a1;
@@ -40,13 +41,54 @@
   background-color: #0b2668;
   border-color: #0b2668;
 }
+
 .carrier {
   background-color: #01133f;
   border-color: #01133f;
 }
+
 .ship.hide {
   display: none!important;
 }
 .ship.show {
   display: flex!important;
+}
+.destroyed-destroyer div {
+  background-color: #3566e0;
+}
+.destroyed-submarine div {
+  background-color: #1d42a1;
+}
+.destroyed-battleship div {
+  background-color: #0b2668;
+}
+.destroyed-carrier div {
+  background-color: #01133f;
+}
+.destroyed-ships {
+ margin-left: 22px;
+}
+.destroyed-ship {
+  display: flex;
+  margin-bottom: 2px;
+}
+.destroyed-ship div{
+  width: 18px;
+  height: 18px;
+  margin-bottom: 2px;
+  position: relative;
+}
+.destroyed-ship div:after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background-color: rgb(255, 0, 0);
+}
+.destroyed-ship .destroyed-ship-with-margin {
+  margin-right: 5px;
 }

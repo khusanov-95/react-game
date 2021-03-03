@@ -1,60 +1,63 @@
 import React, {useState} from 'react';
 import ComputerBattleGround from './ComputerBattleground';
 import UserBattleground from './UserBattleground';
-
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
-
 import './css/App.css'
+import './css/ShipList.css'
 
-let gameOver = false;
+let gameOver = false; 
 let winner = '';
-console.log(gameOver)
+
 const App = () => {
-  const [openGame, setOpenGame] = useState('notStarted');
-  const [startGame, setStartGame] = useState(false);
-  const [turn, setTurn] = useState('user');
-  const [userTakenShips, setUserTakenShips] = useState(0);
+  const [openGame, setOpenGame] = useState('notStarted'); // open game when single player clicked
+  const [startGame, setStartGame] = useState(false); // start game when Start Battle clicked
+  const [turn, setTurn] = useState('user');//set turns
+  const [userTakenShips, setUserTakenShips] = useState(0);// count ships droped on board
 
-
+  //count destroyed ship cells of each type and each sides(computer,user)
+      //count ships logic was partially taken from https://github.com/kubowania/battleships/blob/master/public/singleplayer.html
   const [countDestroyer, setCountDestroyer] = useState(0);
   const [countSubmarine, setCountSubmarine] = useState(0);
   const [countBattleship, setCountBattleship] = useState(0);
   const [countCarrier, setCountCarrier] = useState(0);
-
   const [computerCountDestroyer, setComputerCountDestroyer] = useState(0);
   const [computerCountSubmarine, setComputerCountSubmarine] = useState(0);
   const [computerCountBattleship, setComputerCountBattleship] = useState(0);
   const [computerCountCarrier, setComputerCountCarrier] = useState(0);
 
-
-  const [restart, setRestart] = useState(false);
-
+  const [restart, setRestart] = useState(false);// restarts the game
+  console.log(countDestroyer,countSubmarine,countBattleship,countCarrier);
+  //when all ships are destroyed => set the winner, finish the game
   if(countDestroyer + countSubmarine + countBattleship + countCarrier === 20) {
-    gameOver = true;
-    winner = 'user';
+      gameOver = true;
+      winner = 'user';
+  
   }
   if(computerCountDestroyer + computerCountSubmarine + computerCountBattleship +  computerCountCarrier === 20) {
-    gameOver = true;
-    winner = 'computer';
+      gameOver = true;
+      winner = 'computer';
   }
-  console.log(countDestroyer,countSubmarine,countBattleship,countCarrier)
  
-  const handle = useFullScreenHandle();
-  function startTheGame() {
-    if(userTakenShips % 10 === 0) {
+  const handle = useFullScreenHandle();// full screen handler
+
+  function startTheGame() { // start game if all ships are droped on board
+    if(userTakenShips === 10) {
       setStartGame(true);
-      // setRestart(false);
     } else alert('Set all your ships to start a battle');
   }
-  function handleStartAgainBtn(e) {
-  setCountDestroyer(0);
-  setCountSubmarine(0);
-  setCountBattleship(0);
-  setCountCarrier(0);
-  setComputerCountDestroyer(0);
-  setComputerCountSubmarine(0);
-  setComputerCountBattleship(0);
-  setComputerCountCarrier(0);
+
+  function handleRestartAgainBtn(e) { // restar the game on click
+    // set all ship cell count to 0  
+    setCountDestroyer(0);
+    setCountSubmarine(0);
+    setCountBattleship(0);
+    setCountCarrier(0);
+    setComputerCountDestroyer(0);
+    setComputerCountSubmarine(0);
+    setComputerCountBattleship(0);
+    setComputerCountCarrier(0);
+    setUserTakenShips(0)
+    // restart all cells and ships to default
     setRestart(true);
     gameOver = false;
     setTurn('user');
@@ -64,6 +67,7 @@ const App = () => {
       setRestart(false);
     },0); 
   }
+
   return (
     <div >
       {
@@ -98,16 +102,6 @@ const App = () => {
                 countCarrier={countCarrier} setCountCarrier={setCountCarrier}
                 restart={restart}
                 /> 
-              {/* <div>
-                {countDestroyer === 4 ? (console.log('destroyer is done')) : ('')}
-                {countSubmarine === 6 ? (console.log('destroyer is done')) : ('')}
-                {countBattleship === 6 ? (console.log('destroyer is done')) : ('')}
-                {countCarrier === 4 ? (console.log('destroyer is done')) : ('')}
-                {computerCountDestroyer === 4 ? (console.log('Computer destroyer is done')) : ('')}
-                {computerCountSubmarine === 6 ? (console.log('Computer destroyer is done')) : ('')}
-                {computerCountBattleship === 6 ? (console.log('Computer destroyer is done')) : ('')}
-                {computerCountCarrier === 4 ? (console.log('Computer destroyer is done')) : ('')}
-              </div> */}
               <div>
                 {startGame ? ('') : (<button className="start-battle-btn" onClick={startTheGame}>Start Battle</button>)}
               </div>
@@ -128,7 +122,7 @@ const App = () => {
                       {winner === 'user' ? ("You've won") : ("You've lost")}
                     </h2>
                   </div>
-                  <button className="startAgain-btn" onClick={(e) => handleStartAgainBtn(e)}>Try again</button>
+                  <button className="startAgain-btn" onClick={(e) => handleRestartAgainBtn(e)}>Try again</button>
                 </div>     
             </div>
           </FullScreen>

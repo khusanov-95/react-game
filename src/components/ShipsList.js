@@ -5,6 +5,7 @@ const ShipsList = (props) => {
 
 const [isRotated, setRotation] = useState(false)
 
+//rotate ship on doubleclick
 function rotateShip(e) {
   setRotation(!isRotated);
   if(isRotated) {
@@ -16,25 +17,19 @@ function rotateShip(e) {
     e.target.parentNode.style.width = '';
     props.getIsVertical(isRotated);
   }  
-  
 }
-
+//get draged ship and send it to UserBattleground.js
 function dragStart(e) {
-  console.log(e.target)
   if(e.target.className.includes('ship') ) {
     props.getDragedShip(e.target)
   } else {
     props.getDragedShip(e.target.parentNode)
   }
-  // setTimeout(() => {  
-  //   e.target.style.display = "none";
-  // },0); // in order to hide ship when its dragged
 }
-
+// create 4 types of ships
 function destroyer(pos) {
   return(
     <div
-    
     className={`destroyer ship ${props.restart ? 'show' : ''}`}
     draggable={true}
     onMouseDown={(e) => props.selectedCellId(e.target.id)}
@@ -44,7 +39,6 @@ function destroyer(pos) {
     </div>
   );
 }
-
 function submarine(pos) {
   return(
     <div
