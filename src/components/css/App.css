@@ -1,0 +1,291 @@
+body {
+  background-color: #200a0c;
+}
+img {
+  width: 100%;
+  height: auto;
+}
+.container {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  font-family: "Times New Roman", Times, Baskerville, Georgia, serif;
+  background-color: rgb(224, 224, 224);
+  min-height: 100vh;
+}
+.starting-page {
+  background-color: rgb(56, 158, 111);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.starting-page__inner {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: rgba(29, 29, 29, 0.979);
+}
+.starting-page__inner h2 {
+  text-transform: uppercase;
+}
+.starting-page__inner > div {
+  width: 400px;
+}
+.starting-page__btn {
+  text-align: center;
+  position: relative;
+  
+}
+.starting-page__btn:after {
+  content: '';
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  left: 0;
+  bottom: 5%;
+  background-color: rgba(29, 29, 29, 0.979);
+}
+.starting-page__btn button {
+  border: none;
+  background-color: rgb(56, 158, 111);
+  color: rgba(29, 29, 29, 0.979);
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  transition: all .2s ease;
+}
+.starting-page__btn button:hover {
+  transform: scale(1.2);
+  color:yellowgreen;
+  font-weight: bold;
+}
+.notebook-line {
+  height: 1px;
+  width: 100%;
+  background-color: rgba(29, 29, 29, 0.979);
+  margin-top: 25px;
+}
+.turn {
+  position: absolute;
+  top: 4%;
+}
+.turn .fa-user {
+  font-size: 24px;
+  color: #1f5fff;
+}
+.turn .fa-robot {
+  font-size: 24px;
+  color: rgb(255, 0, 0)
+}
+.turn span {
+  font-size: 20px;
+}
+.user-battleground {
+  display: flex;
+  flex-direction: column;
+}
+.computer-battleground {
+  height: 615px;
+}
+.computer-cells-container {
+  width: 350px;
+  height: 350px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.computer-cell {
+  background-color: rgb(255, 255, 255);
+  width: 33px;
+  height: 33px;
+  border: 1px solid rgb(84, 190, 216);
+  cursor: pointer;
+}
+.user-cells-container {
+  width: 350px;
+  height: 350px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.user-cell {
+  background-color: rgb(255, 255, 255);
+  width: 33px;
+  height: 33px;
+  border: 1px solid rgb(84, 190, 216);
+  cursor: pointer;
+}
+.computer-cell.taken {
+  background-color: rgb(255, 255, 255);
+  border-color: rgb(84, 190, 216);;
+} 
+.computer-cell.taken.damaged, .user-cell.damaged  {
+  position: relative;
+}
+
+.computer-cell.missed, .user-cell.missed {
+  position: relative;
+}
+.computer-cell.missed::after, .user-cell.missed::after, .computer-cell.taken.damaged::after, .user-cell.damaged::after{
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgb(0, 0, 0);
+  top: 50%;
+  left: 50%;
+  transform:translate(-50%,-50%) ;
+}
+.computer-cell.taken.damaged::after, .user-cell.damaged::after {
+  background-color: rgb(255, 0, 0);
+}
+.sideOptions-container {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  display: flex;
+  flex-direction: column;
+}
+.expand-btn, .sound-volume, .settings {
+  margin-bottom: 5px;
+  background-color: #fff;
+  cursor: pointer;
+  border: 1px solid #01133f
+}
+.settings-close {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  position: absolute;
+  top: 5%;
+  right: 5%;
+}
+.settings-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgb(56, 158, 111);
+  /* z-index: 5; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
+.settings-container span {
+  font-weight: bold;
+  font-size: 20px;
+}
+.expand-btn .fas, .sound-volume .fas, .settings .fas {
+  font-size: 20px;
+  color: #01133f;
+  padding: 2px;
+}
+.settings-close .fas {
+  font-size: 34px;
+  color: #fff;
+}
+.start-battle-btn {
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  color: #01133f;
+  font-weight: bold;
+  padding: 5px;
+  cursor: pointer;
+  transition: color .2s ease;
+}
+.start-battle-btn:hover {
+  color:rgb(255, 0, 0)
+}
+.footer {
+  height: 50px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+.footer__inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.footer a {
+  cursor: pointer;
+}
+.footer__inner div {
+  width: 100px;
+  text-align: center;
+}
+.footer__inner div:first-child {
+  text-align: right;
+}
+.footer .fab, .footer img {
+  transition: all .2s ease;
+  font-size: 35px;
+  color: #000;
+}
+
+.footer .fab:hover, .footer img:hover {
+  transform: scale(1.2);
+}
+.game-over-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.winner h2 {
+  color: #fff;
+  font-size: 30px;
+}
+.startAgain-btn {
+  font-size: 16px;
+  color: #01133f;
+  font-weight: bold;
+  padding: 5px;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.startAgain-btn:hover {
+  transform: scale(1.2);
+}
+
+@media only screen and (max-height: 685px) {
+  .turn {
+    top: 80%;
+  }
+}
+@media only screen and (max-width: 805px) {
+  .turn {
+    top: 46%;
+  }
+  .start-battle-btn {
+    bottom: 55%;
+  }
+  .footer {
+    bottom: 60px; 
+  }
+}
