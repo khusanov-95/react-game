@@ -25,8 +25,7 @@ const App = () => {
   const [computerCountSubmarine, setComputerCountSubmarine] = useState(0);
   const [computerCountBattleship, setComputerCountBattleship] = useState(0);
   const [computerCountCarrier, setComputerCountCarrier] = useState(0);
-  console.log(countDestroyer,countSubmarine,countBattleship,countCarrier);
-  console.log(computerCountDestroyer,computerCountSubmarine,computerCountBattleship,computerCountCarrier)
+
 
   const [restart, setRestart] = useState(false);
 

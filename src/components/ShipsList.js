@@ -10,11 +10,11 @@ function rotateShip(e) {
   if(isRotated) {
     e.target.parentNode.style.display = 'inline-block';
     e.target.parentNode.style.width = '33px';
-    props.getIsVertical(isRotated)
+    props.getIsVertical(isRotated);
   } else {
     e.target.parentNode.style.display = 'flex'
     e.target.parentNode.style.width = '';
-    props.getIsVertical(isRotated)
+    props.getIsVertical(isRotated);
   }  
   
 }
@@ -33,7 +33,8 @@ function dragStart(e) {
 
 function destroyer(pos) {
   return(
-    <div 
+    <div
+    
     className={`destroyer ship ${props.restart ? 'show' : ''}`}
     draggable={true}
     onMouseDown={(e) => props.selectedCellId(e.target.id)}
@@ -46,7 +47,8 @@ function destroyer(pos) {
 
 function submarine(pos) {
   return(
-    <div 
+    <div
+    style={props.gameOver ? {display: "flex", width: ""} : {}} 
     className={`submarine ship ${props.restart ? 'show' : ''}`} 
     draggable={true} 
     onDoubleClick={rotateShip}
@@ -60,7 +62,9 @@ function submarine(pos) {
 }
 function battleship(pos) {
   return(
-    <div className={`battleship ship ${props.restart ? 'show' : ''}`} 
+    <div
+    style={props.gameOver ? {display: "flex", width: ""} : {}} 
+    className={`battleship ship ${props.restart ? 'show' : ''}`} 
     draggable={true} 
     onDoubleClick={rotateShip}
     onMouseDown={(e) => props.selectedCellId(e.target.id)}
@@ -74,7 +78,9 @@ function battleship(pos) {
 }
 function carrier(pos) {
   return(
-    <div className={`carrier ship ${props.restart ? 'show' : ''}`}
+    <div
+    style={props.gameOver ? {display:"flex", width: ""} : {}} 
+    className={`carrier ship ${props.restart ? 'show' : ''}`}
     draggable={true} 
     onDoubleClick={rotateShip}
     onMouseDown={(e) => props.selectedCellId(e.target.id)}

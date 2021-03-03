@@ -164,6 +164,7 @@ if(props.turn === 'computer' && !props.gameOver && props.startGame || props.turn
       </div>
       <ShipList
         restart = {props.restart}
+        gameOver = {props.gameOver}
         selectedCellId = {shipCellId => setShipCellId(shipCellId)} 
         getDragedShip = {dragedShip => setDragedShip(dragedShip)}
         getIsVertical = {isVertical => setIsVertical(isVertical)}
